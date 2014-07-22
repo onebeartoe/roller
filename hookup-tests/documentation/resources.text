@@ -1,0 +1,31 @@
+
+Install Java 7 
+
+    sudo apt-get install oracle-java7-jdk
+
+----------------------------------------------------------------------
+
+Install the Pi4J .deb package on the Raspberry Pi, as described here:
+
+    http://pi4j.com/install.html
+
+
+----------------------------------------------------------------------
+
+PWM with the DC motors
+
+    https://github.com/Pi4J/pi4j/blob/master/pi4j-example/src/main/java/WiringPiSoftPWMExample.java
+
+-------------------------------------------------------------------------------------------------
+
+Liberty Profile Wifi Cars
+
+    https://developer.ibm.com/wasdev/2013/04/25/liberty_controlled_car/
+
+    https://developer.ibm.com/wasdev/2013/04/25/liberty_controlled_car/
+
+----------------------------------------------------------------------
+
+Place the onebeartoe-roller JAR file on the Raspberry Pi and execute this command to test the connections:
+
+    sudo java -cp /opt/pi4j/lib/pi4j-core.jar:onebeartoe-1.0-SNAPSHOT.jar org.onebeartoe.roller.onebeartoe.App
