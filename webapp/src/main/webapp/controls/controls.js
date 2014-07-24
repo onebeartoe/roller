@@ -10,7 +10,9 @@ var centerX = 400;
 
 var centerY = 300;
 
-var controlsListener;
+var controlsPoller;
+
+var controlsUrl = "../controller";
 
 function angleToDirection(angle)
 {
@@ -62,11 +64,11 @@ function create()
     
     directionLabel = game.add.text(350, 56, 'Directions', { fontSize: '32px', fill: '#000' });
     
-    controlsListener = setInterval(readControls, 2000);
+    controlsPoller = setInterval(readControls, 2000);
     
     window.onunload = function()
     {
-        clearInterval(controlsListener);
+        clearInterval(controlsPoller);
     };
 }
 
@@ -119,7 +121,7 @@ function updateLabel()
             document.getElementById("logs").innerHTML = s;
         }
     }
-    xmlhttp.open("POST", "../logs", true);
+    xmlhttp.open("POST", controlsUrl, true);
     xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
     xmlhttp.send("message=hi&lname=Ford");
 }

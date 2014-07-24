@@ -7,7 +7,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,29 +17,28 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Roberto Marquez
  */
-@WebServlet(urlPatterns = {"/logs"}, loadOnStartup = 1)
-public class LogsServlet extends HttpServlet
+@WebServlet(urlPatterns = {"/controller"}, loadOnStartup = 1)
+public class DirectionControlsServlet extends HttpServlet
 {
     private Logger logger;
     
     private volatile List<String> messages;
     
+    public static final String ROLLER_KEY = "roller";
+    
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        request.setAttribute("messages", messages);
-        
-        String e = request.getParameter("e");
-        if(e != null)
-        {
-            messages.add(e);
-        }
+        String m = request.getParameter("message");
+        messages.add(m);
                 
-        ServletContext context = getServletContext();
-        RequestDispatcher rd = context.getRequestDispatcher("/logs/index.jsp");
-        rd.forward(request, response);
-    }
+        OutputStream os = response.getOutputStream();
+        PrintWriter pw = new PrintWriter(os);
+        pw.println(m + "._.<br/>");
+        pw.flush();
+        pw.close();
+    }    
     
     @Override
     public void init() throws ServletException 
@@ -48,9 +46,16 @@ public class LogsServlet extends HttpServlet
         super.init();
         
         logger = Logger.getLogger(getClass().getName());
-
-// fix this
+        
         messages = new ArrayList();
         messages.add("servlet started" + "<br/>");
+        
+        ServletContext servletContext = getServletContext();
+        Roller roller = (Roller) servletContext.getAttribute(ROLLER_KEY);
+        if(roller == null)
+        {
+            roller = new Roller();
+            servletContext.setAttribute(ROLLER_KEY, roller);
+        }
     }
 }
