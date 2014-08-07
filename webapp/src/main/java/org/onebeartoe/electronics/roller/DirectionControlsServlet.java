@@ -38,7 +38,7 @@ public class DirectionControlsServlet extends HttpServlet
         pw.println(m + "._.<br/>");
         pw.flush();
         pw.close();
-    }    
+    }
     
     @Override
     public void init() throws ServletException 

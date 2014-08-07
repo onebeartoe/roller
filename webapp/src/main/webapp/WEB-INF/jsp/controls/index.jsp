@@ -20,7 +20,7 @@
                 </center>
                 
                 <div id="logs" style="margin-left: auto; margin-right: auto; width: 631px;">
-                    bye
+                    
                 </div>
 	    </div>                        
 	</div>

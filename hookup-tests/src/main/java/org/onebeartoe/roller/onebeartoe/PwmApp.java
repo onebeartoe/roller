@@ -6,14 +6,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Hello world!
- *
+ * This is a small program to check that both motors are correctly connected
+ * to the RTK Motor Controller Board Kit for Raspberry Pi
  */
 public class PwmApp 
 {
     public static void main( String[] args )
     {        
-        System.out.println( "A" );
+        System.out.println( "PWM Test" );
 
         com.pi4j.wiringpi.Gpio.wiringPiSetup();
 
@@ -28,6 +28,8 @@ public class PwmApp
         sleepo(2000);
         
         SoftPwm.softPwmWrite(1, 0);
+        
+// todo: test the other motor        
     }
     
     public static void sleepo(long duration)

@@ -117,7 +117,7 @@ function updateLabel()
     {
         if (xmlhttp.readyState==4 && xmlhttp.status==200)      
         {
-            var s = document.getElementById("logs").innerHTML + "<br/>" + xmlhttp.responseText;
+            var s = xmlhttp.responseText + "<br/>" + document.getElementById("logs").innerHTML;
             document.getElementById("logs").innerHTML = s;
         }
     }
