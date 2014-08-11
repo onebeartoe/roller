@@ -23,13 +23,51 @@ public class Roller
     
     public Roller()
     {
-        Gpio.wiringPiSetup();
+// uncomment this for production        
+//        Gpio.wiringPiSetup();
+//        
+//        // motor 1                      min=0, max=100)
+//        SoftPwm.softPwmCreate(pin0,     0,     FULL_SPEED);
+//        SoftPwm.softPwmCreate(pin1,     0,     FULL_SPEED);
+    }
+
+    public void moveBackward()
+    {
         
-        // motor 1                      min=0, max=100)
-        SoftPwm.softPwmCreate(pin0,     0,     FULL_SPEED);
-        SoftPwm.softPwmCreate(pin1,     0,     FULL_SPEED);
+    }
+
+    public void moveBackwardLeft()
+    {
+        
     }
     
+    public void moveBackwardRight()
+    {
+        
+    }
+    
+    public void moveForward()
+    {
+// uncomment this for production
+//        SoftPwm.softPwmWrite(pin0, 0);
+//        SoftPwm.softPwmWrite(pin1, acceleration);
+        
+// move the other mother forward        
+    }
+
+    public void moveForwardLeft()
+    {
+        
+    }
+
+    public void moveForwardRight()
+    {
+        
+    }
+    
+    /**
+     * @param acceleration a value between 0-100 
+     */
     public void setAcceleration(int acceleration)
     {
         if(acceleration > 100)
@@ -46,12 +84,8 @@ public class Roller
         }
     }
     
-    public void moveForward()
+    public void stop()
     {
-        SoftPwm.softPwmWrite(pin0, 0);
-        SoftPwm.softPwmWrite(pin1, acceleration);
         
-// move the other mother forward        
-    }
-    
+    }        
 }

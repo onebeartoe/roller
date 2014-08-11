@@ -15,10 +15,6 @@
                     <script type="text/javascript" src="controls.js"></script>
                 </div>
                 
-                <center>
-                    center
-                </center>
-                
                 <div id="logs" style="margin-left: auto; margin-right: auto; width: 631px;">
                     
                 </div>

@@ -13,6 +13,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import static org.onebeartoe.electronics.roller.ControlCommands.BACKWARD;
+import static org.onebeartoe.electronics.roller.ControlCommands.BACKWARD_LEFT;
+import static org.onebeartoe.electronics.roller.ControlCommands.BACKWARD_RIGHT;
+import static org.onebeartoe.electronics.roller.ControlCommands.FORWARD;
+import static org.onebeartoe.electronics.roller.ControlCommands.FORWARD_LEFT;
+import static org.onebeartoe.electronics.roller.ControlCommands.FORWARD_RIGHT;
 
 /**
  * @author Roberto Marquez
@@ -30,12 +36,30 @@ public class DirectionControlsServlet extends HttpServlet
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        String m = request.getParameter("message");
-        messages.add(m);
+        String p = request.getParameter("message");
+        messages.add(p);
+        
+        if(messages.size() > 50)
+        {
+            messages.remove(0);
+        }
+        
+        ServletContext sc = getServletContext();
+        Roller roller = (Roller) sc.getAttribute(ROLLER_KEY);
+        
+        String result;
+        try
+        {
+            result = updateControls(roller, p);
+        }
+        catch(Exception e)
+        {
+            result = e.getMessage();
+        }        
                 
         OutputStream os = response.getOutputStream();
         PrintWriter pw = new PrintWriter(os);
-        pw.println(m + "._.<br/>");
+        pw.println(result + "<br/>");
         pw.flush();
         pw.close();
     }
@@ -47,8 +71,11 @@ public class DirectionControlsServlet extends HttpServlet
         
         logger = Logger.getLogger(getClass().getName());
         
-        messages = new ArrayList();
-        messages.add("servlet started" + "<br/>");
+        if(messages == null)
+        {
+            messages = new ArrayList();
+            messages.add("servlet started" + "<br/>");
+        }
         
         ServletContext servletContext = getServletContext();
         Roller roller = (Roller) servletContext.getAttribute(ROLLER_KEY);
@@ -57,5 +84,86 @@ public class DirectionControlsServlet extends HttpServlet
             roller = new Roller();
             servletContext.setAttribute(ROLLER_KEY, roller);
         }
+    }
+    
+    private void issueCommand(Roller roller, ControlCommands command)
+    {
+        switch(command)
+        {
+            case FORWARD:
+            {
+                roller.moveForward();
+                break;
+            }
+            case FORWARD_LEFT:
+            {
+                roller.moveForwardLeft();
+                break;
+            }
+            case FORWARD_RIGHT:
+            {
+                roller.moveBackwardRight();
+                break;
+            }
+            case BACKWARD:
+            {
+                roller.moveBackward();
+                break;
+            }
+            case BACKWARD_LEFT:
+            {
+                roller.moveBackwardLeft();
+                break;
+            }
+            case BACKWARD_RIGHT:
+            {
+                roller.moveBackwardRight();
+                break;
+            }
+            case STOP:
+            {
+                roller.stop();
+                break;
+            }
+        }        
+    }
+    
+    private ControlCommands parseCommand(String message)
+    {
+        ControlCommands command;
+        try
+        {
+            command = ControlCommands.valueOf(message);
+        }
+        catch(IllegalArgumentException e)
+        {
+            command = ControlCommands.UNKNOWN;
+        } 
+        
+        return command;
+    }
+    
+    private String updateControls(Roller roller, String message)
+    {
+        String result;
+        
+        if(message == null || message.trim().equals(""))
+        {
+            result = "no message given";
+        }
+        
+        ControlCommands command = parseCommand(message);
+        
+        if(command == ControlCommands.UNKNOWN)
+        {
+            result = "unknown command recieved: " + message;
+        }
+        else
+        {            
+            issueCommand(roller, command);
+            result = command + " processed";
+        }
+        
+        return result;
     }
 }

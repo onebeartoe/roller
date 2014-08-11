@@ -1,3 +1,4 @@
+
 var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'gameDiv', { preload: preload, create: create, update: update, render: render });
 
 var arrowSprite;
@@ -34,6 +35,21 @@ function angleToDirection(angle)
             direction = "FORWARD_LEFT";
             break;
         }
+        case(120 > angle && angle >= 60):
+        {
+            direction = "BACKWARD";
+            break;
+        }
+        case(60 > angle && angle >= 1):
+        {
+            direction = "BACKWARD_RIGHT";
+            break;
+        }
+        case(180 > angle && angle >= 120):
+        {
+            direction = "BACKWARD_LEFT";
+            break;
+        }
         default:
         {
             direction = "unkown: " + angle;
@@ -64,7 +80,8 @@ function create()
     
     directionLabel = game.add.text(350, 56, 'Directions', { fontSize: '32px', fill: '#000' });
     
-    controlsPoller = setInterval(readControls, 2000);
+    // read the controls every second
+    controlsPoller = setInterval(readControls, 1000);
     
     window.onunload = function()
     {
@@ -87,7 +104,7 @@ function readControls()
     }
     else
     {
-        directionLabel.text = "is up";
+        directionLabel.text = "STOP";
     }
 }
 
@@ -110,8 +127,9 @@ function updateLabel()
 {
     isAccelerating = !isAccelerating;
 
-    directionLabel.text = isAccelerating ? 'Accelerating' : 'Idle';
+//    directionLabel.text = isAccelerating ? 'Accelerating' : 'Idle';
     
+    var params = "message=" + directionLabel.text + "&lname=Ford";
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange=function()
     {
@@ -123,5 +141,5 @@ function updateLabel()
     }
     xmlhttp.open("POST", controlsUrl, true);
     xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    xmlhttp.send("message=hi&lname=Ford");
+    xmlhttp.send(params);
 }
