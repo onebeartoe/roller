@@ -14,7 +14,7 @@
 
     <packaging>jar</packaging>
 
-    <name>onebeartoe-roller-hookup-tests</name>
+    <name>onebeartoe-roller</name>
 
     <url>http://maven.apache.org</url>
 
