@@ -1,5 +1,5 @@
 
-package org.onebeartoe.roller.onebeartoe;
+package org.onebeartoe.roller;
 
 import com.pi4j.wiringpi.SoftPwm;
 import java.util.logging.Level;
