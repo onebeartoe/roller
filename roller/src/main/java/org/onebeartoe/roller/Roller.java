@@ -1,5 +1,5 @@
 
-package org.onebeartoe.electronics.roller;
+package org.onebeartoe.roller;
 
 import com.pi4j.wiringpi.Gpio;
 import com.pi4j.wiringpi.SoftPwm;

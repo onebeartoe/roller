@@ -1,6 +1,7 @@
 
 package org.onebeartoe.electronics.roller;
 
+import org.onebeartoe.roller.Roller;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
