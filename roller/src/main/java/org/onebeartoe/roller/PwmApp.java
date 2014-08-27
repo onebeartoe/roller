@@ -13,7 +13,7 @@ public class PwmApp
 {
     public static void main( String[] args )
     {        
-        System.out.println( "PWM Test" );
+        System.out.println("PWM Test");
 
         com.pi4j.wiringpi.Gpio.wiringPiSetup();
 
@@ -28,6 +28,7 @@ public class PwmApp
         sleepo(2000);
         
         SoftPwm.softPwmWrite(1, 0);
+        
         
 // todo: test the other motor        
     }

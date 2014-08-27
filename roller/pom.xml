@@ -34,35 +34,6 @@
         </repository>
     </repositories>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                  <source>1.6</source>
-                  <target>1.6</target>
-                </configuration>
-              </plugin>
-            
-            <plugin>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                <archive>
-                <manifest>
-                <addClasspath>true</addClasspath>
-                <classpathPrefix>lib/</classpathPrefix>
-                <mainClass>org.onebeartoe.roller.onebeartoe.PwmApp</mainClass>
-                </manifest>
-                </archive>
-                </configuration>
-            </plugin>             
-                        
-        </plugins>
-    </build>
-
     <dependencies>
         <!--dependency>
             <groupId>com.oracle</groupId>
@@ -83,6 +54,45 @@
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-core</artifactId>
             <version>0.0.5</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                  <source>1.6</source>
+                  <target>1.6</target>
+                </configuration>
+              </plugin>
+    
+	    <plugin>
+		<artifactId>maven-assembly-plugin</artifactId>
+		<configuration>
+		    <archive>
+			<manifest>
+			    <mainClass>org.onebeartoe.roller.RollerTest</mainClass>
+			</manifest>
+		    </archive>
+		    <descriptorRefs>
+			<descriptorRef>jar-with-dependencies</descriptorRef>
+		    </descriptorRefs>
+		</configuration>
+		<executions>
+		    <execution>
+			<id>make-assembly</id>   <!-- this is used for inheritance merges -->
+			<phase>package</phase>   <!-- bind to the packaging phase -->
+			<goals>
+			    <goal>single</goal>
+			</goals>
+		    </execution>
+		</executions>
+	    </plugin>            
+        </plugins>
+    </build>
+    
 </project>
