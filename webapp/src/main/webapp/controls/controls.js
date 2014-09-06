@@ -1,5 +1,6 @@
 
-var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'gameDiv', { preload: preload, create: create, update: update, render: render });
+var game = new Phaser.Game(600, 400, Phaser.CANVAS, 'gameDiv', { preload: preload, create: create, update: update, render: render });
+//var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'gameDiv', { preload: preload, create: create, update: update, render: render });
 
 var arrowSprite;
 

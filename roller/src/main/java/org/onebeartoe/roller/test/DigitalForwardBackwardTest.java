@@ -1,11 +1,10 @@
-package org.onebeartoe.roller;
+package org.onebeartoe.roller.test;
 
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
-import static org.onebeartoe.roller.PwmApp.sleepo;
 
 /**
  * This works as a test to verify your Roller is hooked up correctly.
@@ -25,7 +24,7 @@ public class DigitalForwardBackwardTest
 
     public static void main(String[] args) 
     {
-        System.out.println("Forward Backward Test H");
+        System.out.println("Forward Backward Test B");
 
         GpioController gpio = GpioFactory.getInstance();
 
@@ -42,14 +41,14 @@ public class DigitalForwardBackwardTest
         System.out.println("move forward");
         leftForward.high();
         rightBackward.high();
-        sleepo(2000);
+        PwmTest.sleepo(2000);
         leftForward.low();
         rightBackward.low();
 
         System.out.println("move backward");
         leftBackward.high();
         rightForward.high();
-        sleepo(2000);
+        PwmTest.sleepo(2000);
         leftBackward.low();
         rightForward.low();
         

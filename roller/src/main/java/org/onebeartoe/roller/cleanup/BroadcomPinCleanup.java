@@ -1,5 +1,5 @@
 
-package org.onebeartoe.roller;
+package org.onebeartoe.roller.cleanup;
 
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;

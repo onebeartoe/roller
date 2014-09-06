@@ -1,12 +1,13 @@
 
 package org.onebeartoe.electronics.roller;
 
-import org.onebeartoe.roller.Roller;
+import org.onebeartoe.roller.hardware.Roller;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -32,7 +33,20 @@ public class DirectionControlsServlet extends HttpServlet
     private volatile List<String> messages;
     
     public static final String ROLLER_KEY = "roller";
-    
+
+    @Override
+    public void destroy() 
+    {
+        super.destroy();
+        
+        String message = "on destroy, stopping roller";
+        logger.log(Level.INFO, message);
+        
+        ServletContext sc = getServletContext();
+        Roller roller = (Roller) sc.getAttribute(ROLLER_KEY);
+        roller.stop();
+    }
+            
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
@@ -52,6 +66,7 @@ public class DirectionControlsServlet extends HttpServlet
         try
         {
             result = updateControls(roller, p);
+            logger.log(Level.INFO, result);
         }
         catch(Exception e)
         {
@@ -83,6 +98,8 @@ public class DirectionControlsServlet extends HttpServlet
         if(roller == null)
         {
             roller = new Roller();
+            int acceleration = 100;
+            roller.setAcceleration(acceleration);
             servletContext.setAttribute(ROLLER_KEY, roller);
         }
     }

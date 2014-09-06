@@ -1,9 +1,9 @@
 
-package org.onebeartoe.roller;
+package org.onebeartoe.roller.cleanup;
 
 import com.pi4j.wiringpi.Gpio;
 import com.pi4j.wiringpi.SoftPwm;
-import static org.onebeartoe.roller.PwmApp.sleepo;
+import org.onebeartoe.roller.test.PwmTest;
 
 /**
  * @author Roberto Marquez
@@ -20,11 +20,10 @@ public class PwmPinCleanup
         {
             System.out.print("creating pin " + p);
             SoftPwm.softPwmCreate(p, 0, 100);
-            sleepo(300);
+            PwmTest.sleepo(300);
             System.out.println(", cleaning, ");
             SoftPwm.softPwmWrite(p, 50);        
             System.out.println("done");
         }
     }
 }
-

@@ -1,33 +1,32 @@
 
-package org.onebeartoe.roller;
+package org.onebeartoe.roller.test;
 
-import com.pi4j.io.gpio.GpioController;
-import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.wiringpi.Gpio;
 import com.pi4j.wiringpi.SoftPwm;
-import static org.onebeartoe.roller.PwmApp.sleepo;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.onebeartoe.roller.hardware.Roller;
 
 /**
  * @author Roberto Marquez
  */
-public class RollerTest 
+public class PwmTest 
 {
     public static void main(String [] args)
     {
-        int leftMotorForwardPin = 1;
-        int leftMotorBackwardPin = 0;
-        System.out.println("PWM Test C");
-
+        int leftMotorForwardPin = Roller.LEFT_FORWARD_PIN;
+        int leftMotorBackwardPin = Roller.LEFT_BACKWARD_PIN;
         
-//        GpioController gpio = GpioFactory.getInstance();
+        int rightMotorForwardPin = Roller.RIGHT_FORWARD_PIN;
+        int rightMotorBackwardPin = Roller.RIGHT_BACKWARD_PIN;
+        
+        System.out.println("PWM Test C");
+        
         Gpio.wiringPiSetup();
 
-        // create soft-pwm pins (min=0 ; max=100)
         SoftPwm.softPwmCreate(leftMotorForwardPin, 0, 100);
-        SoftPwm.softPwmCreate(leftMotorBackwardPin, 0, 100);
+        SoftPwm.softPwmCreate(leftMotorBackwardPin, 0, 100);        
         
-        int rightMotorForwardPin = 3;
-        int rightMotorBackwardPin = 2;
         SoftPwm.softPwmCreate(rightMotorForwardPin, 0, 100);
         SoftPwm.softPwmCreate(rightMotorBackwardPin, 0, 100);
         
@@ -35,7 +34,6 @@ public class RollerTest
         SoftPwm.softPwmWrite(leftMotorBackwardPin, 0);        
         SoftPwm.softPwmWrite(rightMotorForwardPin, 0);
         SoftPwm.softPwmWrite(rightMotorBackwardPin, 0);
-        
         
         sleepo(1500);
         
@@ -51,8 +49,6 @@ public class RollerTest
         SoftPwm.softPwmWrite(leftMotorBackwardPin, 0);        
         SoftPwm.softPwmWrite(rightMotorForwardPin, 0);
         SoftPwm.softPwmWrite(rightMotorBackwardPin, 0);
-        
-//        gpio.shutdown();
     }
     
     private static void testSide(int forwardPin, int backwardPin)
@@ -83,6 +79,14 @@ public class RollerTest
         // be sure to stop the moter before moving it in the other direction
         SoftPwm.softPwmWrite(backwardPin, 0);
         sleepo(2000);        
+    }
+
+    public static void sleepo(long duration) {
+        try {
+            Thread.sleep(duration);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(RollerTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
 
