@@ -6,11 +6,9 @@ var arrowSprite;
 
 var directionLabel;
 
-var isAccelerating = false;
+var centerX = 300;
 
-var centerX = 400;
-
-var centerY = 300;
+var centerY = 200;
 
 var controlsPoller;
 
@@ -74,8 +72,8 @@ function create()
 
     arrowSprite.inputEnabled = true;
     
-    arrowSprite.events.onInputUp.add(updateLabel);    
-    arrowSprite.events.onInputDown.add(updateLabel, this);
+    arrowSprite.events.onInputUp.add(stopRoller);    
+    arrowSprite.events.onInputDown.add(moveRoller, this);
     
     arrowSprite.input.useHandCursor = true;    
     
@@ -90,6 +88,15 @@ function create()
     };
 }
 
+function moveRoller()
+{
+//alert("move roller");
+
+    var message = directionLabel.text;
+    
+    updateController(message);
+}
+
 function preload() 
 {
     game.load.image('directions', 'assets/sprites/directions.png');
@@ -102,6 +109,8 @@ function readControls()
     {
         directionLabel.text = angleToDirection(arrowSprite.angle);
 //        directionLabel.text = "is down";
+
+        moveRoller();
     }
     else
     {
@@ -117,6 +126,13 @@ function render()
     game.debug.geom(arrowSprite.input._tempPoint);
 }
 
+function stopRoller()
+{
+//alert("stop roller");
+
+    updateController("STOP");
+}
+
 function update() 
 {
     //  This will update the arrowSprite.rotation so that it points to the currently active pointer
@@ -124,13 +140,11 @@ function update()
     arrowSprite.rotation = game.physics.arcade.angleToPointer(arrowSprite);
 }
 
-function updateLabel()
-{
-    isAccelerating = !isAccelerating;
-
-//    directionLabel.text = isAccelerating ? 'Accelerating' : 'Idle';
+function updateController(message)
+{    
+    var params = "message=" + message + "&lname=Ford";
+//    var params = "message=" + directionLabel.text + "&lname=Ford";
     
-    var params = "message=" + directionLabel.text + "&lname=Ford";
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange=function()
     {
