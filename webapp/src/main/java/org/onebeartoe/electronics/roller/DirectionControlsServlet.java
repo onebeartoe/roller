@@ -120,7 +120,7 @@ public class DirectionControlsServlet extends HttpServlet
             }
             case FORWARD_RIGHT:
             {
-                roller.moveBackwardRight();
+                roller.moveForwardRight();
                 break;
             }
             case BACKWARD:
